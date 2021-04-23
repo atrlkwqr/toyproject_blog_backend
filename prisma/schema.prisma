@@ -12,3 +12,8 @@ model User {
   userName String
   createdAt DateTime @default(now())
 }
+
+model Post {
+  postId String @id
+  createdAt DateTime @default(now())
+}

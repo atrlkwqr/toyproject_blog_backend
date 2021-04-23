@@ -1,0 +1,14 @@
+type Query {
+  getAccount(
+    userId: String!
+    ): SignInResponse
+}
+
+type SignInResponse{
+  ok:Boolean!
+  token:String
+}
+
+type Mutation {
+    dummy: String
+}
