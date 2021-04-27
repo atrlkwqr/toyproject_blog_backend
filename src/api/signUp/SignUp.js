@@ -2,23 +2,25 @@ import { PrismaClient, User } from "@prisma/client";
 
 const prisma = new PrismaClient()
 
-const user = {
+const SignUp = {
   Mutation: {
-    registerAccount: async(_, args,{request}) => {
+    registerAccount: async(_, args) => {
 
       try{
         const{
+          email,
           userId,
-          userName
+          password
         } = args;
 
         await prisma.user.create({
           data: {
+            email,
             userId,
-            userName
+            password
           },
         })
-  
+
         return true;
 
       } catch(err){
@@ -29,4 +31,4 @@ const user = {
   }
 };
 
-export default user;
+export default SignUp;

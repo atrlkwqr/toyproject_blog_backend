@@ -8,8 +8,9 @@ generator client {
 }
 
 model User {
-  userId String  @id 
-  userName String
+  email String @id
+  userId String
+  password String
   createdAt DateTime @default(now())
 }
 
