@@ -2,7 +2,7 @@ import { PrismaClient, User } from "@prisma/client";
 
 const prisma = new PrismaClient()
 
-const SignUp = {
+const signUp = {
   Mutation: {
     registerAccount: async(_, args) => {
 
@@ -31,4 +31,4 @@ const SignUp = {
   }
 };
 
-export default SignUp;
+export default signUp;
