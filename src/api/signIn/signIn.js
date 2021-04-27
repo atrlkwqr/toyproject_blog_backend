@@ -1,43 +1,36 @@
-import { PrismaClient, User } from "@prisma/client";
+import { PrismaClient } from "@prisma/client";
 
 const prisma = new PrismaClient()
 
-const user = {
-  Query: {
+const login = {
+  Mutation: {
     getAccount: async(_, args) => {
 
       try{
         const{
-          userId
+          email,
+          password
         } = args;
 
-        var token = await prisma.user.findUnique({
+        var user = await prisma.user.findUnique({
             where: {
-              userId: userId
+              email
             }
         })
 
-        if(token==null) {
-            return {
-              ok:false,
-              token:"false"
-            }
-        } else {
-            return {
-              ok:true,
-              token:"true"
-            }
+        console.log(user)
+
+        if(user===null) {
+            return false;
         }
+        return true;
 
       } catch(err){
         console.log(err)
-        return {
-          ok:false,
-          token:null
-        }
+        return false;
       }
     }
   }
 };
 
-export default user;
+export default login;

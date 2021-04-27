@@ -1,14 +1,10 @@
-type Query {
-  getAccount(
-    userId: String!
-    ): SignInResponse
-}
-
-type SignInResponse{
-  ok:Boolean!
-  token:String
-}
-
 type Mutation {
+  getAccount(
+    email: String 
+    password: String
+  ): Boolean
+}
+
+type Query {
     dummy: String
 }
