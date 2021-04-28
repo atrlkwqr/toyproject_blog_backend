@@ -1,6 +1,8 @@
 import { PrismaClient } from "@prisma/client";
+import { generateToken } from "../../utils";
 
 const prisma = new PrismaClient()
+
 
 const login = {
   Mutation: {
@@ -18,16 +20,28 @@ const login = {
             }
         })
 
-        console.log(user)
+        ////console.log(user)
+        
+        const token = generateToken(user.userId);
+        ////console.log(token)
 
         if(user===null) {
-            return false;
+            return {
+              ok:false,
+              token:null
+            };
         }
-        return true;
+        return {
+          ok:true,
+          token:token
+        };
 
       } catch(err){
         console.log(err)
-        return false;
+        return {
+          ok:false,
+          token:null
+        };
       }
     }
   }

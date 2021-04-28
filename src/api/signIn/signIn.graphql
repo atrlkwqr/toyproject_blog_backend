@@ -1,8 +1,13 @@
+type SignInResponse {
+  ok: Boolean
+  token: String
+}
+
 type Mutation {
   getAccount(
     email: String 
     password: String
-  ): Boolean
+  ): SignInResponse!
 }
 
 type Query {
