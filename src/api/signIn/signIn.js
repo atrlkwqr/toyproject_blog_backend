@@ -1,4 +1,5 @@
 import { PrismaClient } from "@prisma/client";
+import { toNamespacedPath } from "path";
 import { generateToken } from "../../utils";
 
 const prisma = new PrismaClient()
@@ -14,18 +15,27 @@ const login = {
           password
         } = args;
 
-        var user = await prisma.user.findUnique({
+        var userInfo = await prisma.user.findUnique({
             where: {
               email
             }
         })
 
+        if(userInfo.password !== password){
+          return {
+            ok:false,
+            token:null
+          }
+        }
+
+
+
         ////console.log(user)
         
-        const token = generateToken(user.userId);
+        const token = generateToken(userInfo.userId);
         ////console.log(token)
 
-        if(user===null) {
+        if(userInfo===null) {
             return {
               ok:false,
               token:null
