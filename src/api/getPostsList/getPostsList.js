@@ -11,7 +11,7 @@ const getPost = {
 
                 const Id = await prisma.post.findMany({where: {id}});
 
-                console.log(Id);
+                //console.log(Id);
 
                 if (Id === null) {
                     return false;

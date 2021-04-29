@@ -8,16 +8,16 @@ generator client {
 }
 
 model User {
-  email String @id
-  id String
-  userId String
-  password String
+  id String @default(cuid()) @id
+  email String @unique
+  userId String @unique
+  password String?
   createdAt DateTime @default(now())
 }
 
 model Post {
-  postId String @id
-  id String
-  contents String
+  id String @default(cuid()) @id
+  postId String @unique
+  contents String?
   createdAt DateTime @default(now())
 }

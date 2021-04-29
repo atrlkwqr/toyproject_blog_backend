@@ -1,0 +1,11 @@
+type getUserProfileResponse {
+  userId: String
+}
+
+type Query {
+  getUserProfile:getUserProfileResponse
+}
+
+type Mutation {
+    dummy: String
+}

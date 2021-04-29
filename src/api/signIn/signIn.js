@@ -28,11 +28,9 @@ const login = {
           }
         }
 
-
-
         ////console.log(user)
         
-        const token = generateToken(userInfo.userId);
+        const token = generateToken(userInfo.id);
         ////console.log(token)
 
         if(userInfo===null) {
