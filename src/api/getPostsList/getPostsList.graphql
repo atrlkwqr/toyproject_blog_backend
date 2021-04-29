@@ -1,0 +1,10 @@
+type Query {
+  getPostList(
+    postId : String
+    id : String
+    ): Boolean
+}
+
+type Mutation {
+    dummy: String
+}
