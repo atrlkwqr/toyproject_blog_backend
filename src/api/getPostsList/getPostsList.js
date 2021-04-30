@@ -8,22 +8,30 @@ const getPost = {
 
             try {
                 const {id} = args;
+                console.log(id);
 
-                const Id = await prisma.post.findMany({where: {id}});
+                const Posts = await prisma.post.findMany({where: {id}});
 
-                //console.log(Id);
+                console.log(Posts);
 
-                if (Id === null) {
-                    return false;
+                if (Posts === null) {
+                    return {
+                        ok:false,
+                        posts:null
+                    };
                 }
-                if (Id.id !== id) {
-                    return false;
-                }
-                return true;
+
+                return {
+                    ok:true,
+                    posts:Posts
+                };
 
             } catch (err) {
                 console.log(err)
-                return false;
+                return {
+                    ok:false,
+                    posts:null
+                };
             }
         }
     }

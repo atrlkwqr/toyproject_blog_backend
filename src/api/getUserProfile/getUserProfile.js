@@ -20,7 +20,7 @@ const getProfile = {
             }
         })
 
-        console.log(userInfo)
+        //console.log(userInfo)
 
         if(userInfo===null) {
             return {

@@ -1,8 +1,16 @@
+type posts {
+  postId : String
+}
+
+type getPostListResponse {
+  ok : Boolean
+  posts : [posts]
+}
+
 type Query {
   getPostList(
-    postId : String
     id : String
-    ): Boolean
+    ): getPostListResponse
 }
 
 type Mutation {
