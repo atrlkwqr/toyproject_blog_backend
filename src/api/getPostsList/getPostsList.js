@@ -1,30 +1,37 @@
 import {PrismaClient} from "@prisma/client";
+import { isAuthenticated } from "../../middleware";
 
 const prisma = new PrismaClient()
 
 const getPost = {
     Query: {
-        getPostList: async (_, args) => {
+        getPostList: async (_, args, {request}) => {
 
             try {
-                const {id} = args;
-                console.log(id);
+                const isAuth = isAuthenticated(request);
 
-                const Posts = await prisma.post.findMany({where: {id}});
-
-                console.log(Posts);
-
-                if (Posts === null) {
+                if(isAuth === true){
+                    const Posts = await prisma.post.findMany({where: {id:request.user.id}});
+    
+                    if (Posts === null) {
+                        return {
+                            ok:false,
+                            posts:null
+                        };
+                    }
+    
                     return {
-                        ok:false,
+                        ok:true,
+                        posts:Posts
+                    };
+                }
+                else {
+                    return {
+                        ok:true,
                         posts:null
                     };
                 }
 
-                return {
-                    ok:true,
-                    posts:Posts
-                };
 
             } catch (err) {
                 console.log(err)
