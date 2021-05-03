@@ -1,0 +1,15 @@
+type getPostResponse {
+  ok : Boolean
+  title : String
+  contents : String
+}
+
+type Query {
+  getPost(
+    postId : String
+    ): getPostResponse
+}
+
+type Mutation {
+    dummy: String
+}
