@@ -16,8 +16,9 @@ model User {
 }
 
 model Post {
-  postId String @id
+  postId String @default(cuid()) @id
   id String
+  title String
   contents String?
   createdAt DateTime @default(now())
 }
