@@ -1,4 +1,5 @@
 import { PrismaClient } from "@prisma/client";
+import { generateSaltedHash } from "../../utils"
 
 const prisma = new PrismaClient()
 
@@ -17,7 +18,7 @@ const signUp = {
           data: {
             email,
             userId,
-            password
+            password:generateSaltedHash(password)
           },
         })
 

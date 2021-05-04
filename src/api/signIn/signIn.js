@@ -1,6 +1,5 @@
 import { PrismaClient } from "@prisma/client";
-import { toNamespacedPath } from "path";
-import { generateToken } from "../../utils";
+import { generateToken, generateSaltedHash } from "../../utils";
 
 const prisma = new PrismaClient()
 
@@ -21,7 +20,7 @@ const login = {
             }
         })
 
-        if(userInfo.password !== password){
+        if(userInfo.password !== generateSaltedHash(password)){
           return {
             ok:false,
             token:null
