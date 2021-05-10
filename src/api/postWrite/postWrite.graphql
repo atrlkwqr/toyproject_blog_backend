@@ -1,8 +1,13 @@
+type getWritePostResponse {
+  ok : Boolean
+  postId : String
+}
+
 type Mutation {
   writePost(
     title : String
     contents : String
-  ): Boolean
+  ): getWritePostResponse
 }
 
 type Query {
