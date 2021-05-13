@@ -11,26 +11,25 @@ const getProfile = {
       try{
 
         const isAuth = isAuthenticated(request);
-        console.log(isAuth)
+        
+        if(isAuth === true){
 
-
-        var userInfo = await prisma.user.findUnique({
-            where: {
-              id:request.user.id
-            }
-        })
-
-        //console.log(userInfo)
-
-        if(userInfo===null) {
-            return {
-              userId:null
-            };
+          var userInfo = await prisma.user.findUnique({
+              where: {
+                id:request.user.id
+              }
+          })
+  
+          if(userInfo===null) {
+              return {
+                userId:null
+              };
+          }
+  
+          return {
+              userId:userInfo.userId
+          };
         }
-
-        return {
-            userId:userInfo.userId
-        };
 
       } catch(err){
         console.log(err)

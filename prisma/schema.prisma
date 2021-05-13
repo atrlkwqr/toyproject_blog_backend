@@ -17,8 +17,16 @@ model User {
 
 model Post {
   postId String @default(cuid()) @id
+  categoryId String
   id String
   title String
   contents String?
+  createdAt DateTime @default(now())
+}
+
+model Category {
+  categoryId String @default(cuid()) @id
+  id String
+  title String
   createdAt DateTime @default(now())
 }

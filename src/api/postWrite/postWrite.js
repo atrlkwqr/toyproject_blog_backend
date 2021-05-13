@@ -22,7 +22,8 @@ const writePost = {
                                 data: {
                                     id,
                                     title,
-                                    contents
+                                    contents,
+                                    categoryId : "test"
                                 }
                             })
 
