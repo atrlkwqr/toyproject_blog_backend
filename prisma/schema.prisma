@@ -20,7 +20,6 @@ model Post {
   categoryId String
   id String
   title String
-  contents String?
   createdAt DateTime @default(now())
 }
 

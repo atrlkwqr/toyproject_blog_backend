@@ -12,7 +12,15 @@ const writePost = {
 
                 if (isAuth === true) {
 
-                    const {title, contents} = args;
+                    const {title, categoryTitle} = args;
+
+                    const category = await prisma.category.create({
+                        data: {
+                            title : categoryTitle,
+                            id : request.user.id
+                        },
+                    })
+
 
                     if (request.user.id !== null) {
                         const id = request.user.id;
@@ -22,23 +30,22 @@ const writePost = {
                                 data: {
                                     id,
                                     title,
-                                    contents,
-                                    categoryId : "test"
+                                    categoryId: category.categoryId
                                 }
                             })
 
-                        return {ok: true, postId: Post.postId}
+                        return {ok: true, postId: Post.postId, categoryId: Post.categoryId}
                     } else {
-                        return {ok: false, postId: null}
+                        return {ok: false, postId: null, categoryId: null}
                     }
 
                 } else {
-                    return {ok: false, postId: null}
+                    return {ok: false, postId: null, categoryId: null}
                 }
 
             } catch (err) {
                 console.log(err)
-                return {ok: false, postId: null}
+                return {ok: false, postId: null, categoryId: null}
             }
         }
     }
