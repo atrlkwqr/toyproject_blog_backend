@@ -12,30 +12,73 @@ const writePost = {
                 if (isAuth === true) {
                     const { title, categoryTitle } = args;
 
-                    const category = await prisma.category.create({
-                        data: {
+                    const isExist = await prisma.category.findFirst({
+                        where: {
                             categoryTitle,
                             id: request.user.id,
                         },
+                        select: {
+                            categoryId: true,
+                        },
                     });
 
-                    if (request.user.id !== null) {
-                        const id = request.user.id;
-                        const Post = await prisma.post.create({
+                    console.log("isExist : " + isExist);
+
+                    if (isExist === null) {
+                        const category = await prisma.category.create({
                             data: {
-                                id,
-                                title,
-                                categoryId: category.categoryId,
+                                categoryTitle,
+                                id: request.user.id,
                             },
                         });
 
-                        return {
-                            ok: true,
-                            postId: Post.postId,
-                            categoryId: Post.categoryId,
-                        };
+                        if (request.user.id !== null) {
+                            const id = request.user.id;
+
+                            const Post = await prisma.post.create({
+                                data: {
+                                    id,
+                                    title,
+                                    categoryId: category.categoryId,
+                                },
+                            });
+
+                            return {
+                                ok: true,
+                                postId: Post.postId,
+                                categoryId: Post.categoryId,
+                            };
+                        } else {
+                            return {
+                                ok: false,
+                                postId: null,
+                                categoryId: null,
+                            };
+                        }
                     } else {
-                        return { ok: false, postId: null, categoryId: null };
+                        if (request.user.id !== null) {
+                            const id = request.user.id;
+
+                            const Post = await prisma.post.create({
+                                data: {
+                                    id,
+                                    title,
+                                    categoryId: isExist.categoryId,
+                                },
+                            });
+
+                            return {
+                                ok: true,
+                                postId: Post.postId,
+                                categoryId: Post.categoryId,
+                            };
+                        } else {
+                            return {
+                                ok: false,
+                                postId: null,
+                                categoryId: null,
+                            };
+                        }
                     }
                 } else {
                     return { ok: false, postId: null, categoryId: null };

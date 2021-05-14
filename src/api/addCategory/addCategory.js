@@ -11,12 +11,24 @@ const addCategory = {
                 if (isAuth === true) {
                     const { categoryTitle } = args;
 
-                    const Categories = await prisma.category.create({
-                        data: {
+                    const isExist = await prisma.category.findFirst({
+                        where: {
                             categoryTitle,
                             id: request.user.id,
                         },
+                        select: {
+                            categoryId: true,
+                        },
                     });
+
+                    if (isExist === null) {
+                        await prisma.category.create({
+                            data: {
+                                categoryTitle,
+                                id: request.user.id,
+                            },
+                        });
+                    }
 
                     return true;
                 } else {
