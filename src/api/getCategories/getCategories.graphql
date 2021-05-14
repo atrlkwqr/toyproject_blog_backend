@@ -1,0 +1,19 @@
+type category {
+  categoryId : String
+  categoryTitle : String
+}
+
+type getUserCategoriesResponse {
+  ok : Boolean
+  categories : [category]
+}
+
+type Query {
+  getUserCategories(
+    id : String
+    ): getUserCategoriesResponse
+}
+
+type Mutation {
+    dummy: String
+}

@@ -16,7 +16,7 @@ const writePost = {
 
                     const category = await prisma.category.create({
                         data: {
-                            title : categoryTitle,
+                            categoryTitle,
                             id : request.user.id
                         },
                     })

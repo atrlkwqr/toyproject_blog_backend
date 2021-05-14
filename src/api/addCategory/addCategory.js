@@ -15,7 +15,7 @@ const addCategory = {
               
                     const Categories = await prisma.category.create({
                         data: {
-                            title : categoryTitle,
+                            categoryTitle,
                             id : request.user.id
                         },
                     })
