@@ -3,47 +3,48 @@ import { isAuthenticated } from "../../middleware";
 
 const prisma = new PrismaClient();
 
-const getPost = {
+const getCategoryPost = {
     Query: {
-        getPost: async (_, args, { request }) => {
+        getCategoryPostList: async (_, args, { request }) => {
             try {
                 const isAuth = isAuthenticated(request);
 
+                const { categoryId } = args;
+
                 if (isAuth === true) {
-                    const { postId } = args;
-                    const Post = await prisma.post.findUnique({
-                        where: { postId: postId },
+                    const Posts = await prisma.post.findMany({
+                        where: {
+                            id: request.user.id,
+                            categoryId: categoryId,
+                        },
                     });
-                    if (Post === null) {
+
+                    if (Posts === null) {
                         return {
                             ok: false,
-                            title: null,
-                            contents: null,
+                            posts: null,
                         };
                     }
-                    console.log(Post);
+
                     return {
                         ok: true,
-                        title: Post.title,
-                        contents: Post.contents,
+                        posts: Posts,
                     };
                 } else {
                     return {
-                        ok: false,
-                        title: null,
-                        contents: null,
+                        ok: true,
+                        posts: null,
                     };
                 }
             } catch (err) {
                 console.log(err);
                 return {
                     ok: false,
-                    title: null,
-                    contents: null,
+                    posts: null,
                 };
             }
         },
     },
 };
 
-export default getPost;
+export default getCategoryPost;

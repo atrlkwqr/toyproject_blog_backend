@@ -8,6 +8,7 @@ const getUserCategories = {
         getUserCategories: async (_, args, { request }) => {
             try {
                 const isAuth = isAuthenticated(request);
+                console.log(isAuth);
                 if (isAuth === true) {
                     const Categories = await prisma.category.findMany({
                         where: {

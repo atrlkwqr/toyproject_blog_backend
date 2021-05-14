@@ -1,0 +1,23 @@
+scalar DateTime
+
+type posts {
+    title: String
+    postId: String
+    createdAt: DateTime
+}
+
+type getCategoryPostListResponse {
+    ok: Boolean
+    posts: [posts]
+}
+
+type Query {
+    getCategoryPostList(
+        id: String
+        categoryId: String
+    ): getCategoryPostListResponse
+}
+
+type Mutation {
+    dummy: String
+}
