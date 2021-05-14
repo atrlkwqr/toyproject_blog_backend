@@ -1,13 +1,10 @@
 type SignInResponse {
-  ok: Boolean
-  token: String
+    ok: Boolean
+    token: String
 }
 
 type Mutation {
-  getAccount(
-    email: String 
-    password: String
-  ): SignInResponse!
+    getAccount(email: String, password: String): SignInResponse!
 }
 
 type Query {

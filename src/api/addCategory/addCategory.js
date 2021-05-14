@@ -1,38 +1,33 @@
-import {PrismaClient} from "@prisma/client";
+import { PrismaClient } from "@prisma/client";
 import { isAuthenticated } from "../../middleware";
 
-const prisma = new PrismaClient()
+const prisma = new PrismaClient();
 
 const addCategory = {
     Mutation: {
-        addCategory: async (_, args, {request}) => {
+        addCategory: async (_, args, { request }) => {
             try {
                 const isAuth = isAuthenticated(request);
-                if(isAuth === true){
-                    const{
-                        categoryTitle
-                      } = args;
-              
+                if (isAuth === true) {
+                    const { categoryTitle } = args;
+
                     const Categories = await prisma.category.create({
                         data: {
                             categoryTitle,
-                            id : request.user.id
+                            id: request.user.id,
                         },
-                    })
-    
+                    });
+
+                    return true;
+                } else {
                     return true;
                 }
-                else {
-                    return true;
-                }
-
-
             } catch (err) {
-                console.log(err)
+                console.log(err);
                 return false;
             }
-        }
-    }
+        },
+    },
 };
 
 export default addCategory;

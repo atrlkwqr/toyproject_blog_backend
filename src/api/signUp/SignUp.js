@@ -1,35 +1,29 @@
 import { PrismaClient } from "@prisma/client";
-import { generateSaltedHash } from "../../utils"
+import { generateSaltedHash } from "../../utils";
 
-const prisma = new PrismaClient()
+const prisma = new PrismaClient();
 
 const signUp = {
-  Mutation: {
-    registerAccount: async(_, args) => {
+    Mutation: {
+        registerAccount: async (_, args) => {
+            try {
+                const { email, userId, password } = args;
 
-      try{
-        const{
-          email,
-          userId,
-          password
-        } = args;
+                await prisma.user.create({
+                    data: {
+                        email,
+                        userId,
+                        password: generateSaltedHash(password),
+                    },
+                });
 
-        await prisma.user.create({
-          data: {
-            email,
-            userId,
-            password:generateSaltedHash(password)
-          },
-        })
-
-        return true;
-
-      } catch(err){
-        console.log(err)
-        return false;
-      }
-    }
-  }
+                return true;
+            } catch (err) {
+                console.log(err);
+                return false;
+            }
+        },
+    },
 };
 
 export default signUp;

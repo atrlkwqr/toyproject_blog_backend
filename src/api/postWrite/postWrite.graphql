@@ -1,14 +1,11 @@
 type getWritePostResponse {
-  ok : Boolean
-  postId : String
-  categoryId : String
+    ok: Boolean
+    postId: String
+    categoryId: String
 }
 
 type Mutation {
-  writePost(
-    title : String
-    categoryTitle: String
-  ): getWritePostResponse
+    writePost(title: String, categoryTitle: String): getWritePostResponse
 }
 
 type Query {

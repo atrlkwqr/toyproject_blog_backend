@@ -1,13 +1,10 @@
 type addCategoryResponse {
-  ok : Boolean
-  categoryId : String
+    ok: Boolean
+    categoryId: String
 }
 
 type Mutation {
-  addCategory(
-    categoryTitle : String
-    id : String
-    ): addCategoryResponse
+    addCategory(categoryTitle: String, id: String): addCategoryResponse
 }
 
 type Query {

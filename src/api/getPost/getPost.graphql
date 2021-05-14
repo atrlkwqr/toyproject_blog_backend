@@ -1,13 +1,11 @@
 type getPostResponse {
-  ok : Boolean
-  title : String
-  contents : String
+    ok: Boolean
+    title: String
+    contents: String
 }
 
 type Query {
-  getPost(
-    postId : String
-    ): getPostResponse
+    getPost(postId: String): getPostResponse
 }
 
 type Mutation {

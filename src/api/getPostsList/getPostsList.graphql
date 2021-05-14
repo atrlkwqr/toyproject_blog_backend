@@ -1,20 +1,18 @@
 scalar DateTime
 
 type posts {
-  title : String
-  postId : String
-  createdAt : DateTime
+    title: String
+    postId: String
+    createdAt: DateTime
 }
 
 type getPostListResponse {
-  ok : Boolean
-  posts : [posts]
+    ok: Boolean
+    posts: [posts]
 }
 
 type Query {
-  getPostList(
-    id : String
-    ): getPostListResponse
+    getPostList(id: String): getPostListResponse
 }
 
 type Mutation {
