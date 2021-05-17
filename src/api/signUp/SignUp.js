@@ -9,6 +9,10 @@ const signUp = {
             try {
                 const { email, userId, password } = args;
 
+                if (email == "" || userId == "" || password == "") {
+                    return false;
+                }
+
                 await prisma.user.create({
                     data: {
                         email,
