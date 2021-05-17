@@ -24,7 +24,9 @@ const resetPassword = {
                     },
                 });
 
-                if (isExist === null) return false;
+                if (isExist === null) {
+                    return false;
+                }
 
                 const newPassword = generateRandomPassword();
 
@@ -32,9 +34,11 @@ const resetPassword = {
                     generateFrontSaltedHash(newPassword)
                 );
 
+                console.log("success hashedGenerateRandomPassword");
+
                 //https://myaccount.google.com/lesssecureapps?pli=1&rapt=AEjHL4NIYbrR8zXS17OOmtVWK1wnZ9zyoQd5EAa1VMcuzyOfq1wbDx9F_9v_zRGaEVPNRQXmS34Tm4Xx1dQk4cdNFP6eWL6C3w 보안설정 바꾸기
                 transport.sendMail({
-                    from: `BLOG <atrlkwqr@gmail.com>`,
+                    from: `BLOG <openblogyt@gmail.com>`,
                     to: email,
                     subject: "[BLOG] 새로운 비밀번호입니다.",
                     html: `
