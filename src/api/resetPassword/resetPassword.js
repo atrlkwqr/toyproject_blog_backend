@@ -1,65 +1,52 @@
 import { PrismaClient } from "@prisma/client";
-import {
-    generateSaltedHash,
-    generateFrontSaltedHash,
-    generateRandomPassword,
-    transport,
-} from "../../utils";
+import { generateFrontSaltedHash, generateSaltedHash } from "../../utils";
+import { isAuthenticated } from "../../middleware";
 
 const prisma = new PrismaClient();
 
 const resetPassword = {
     Mutation: {
-        resetPassword: async (_, args) => {
+        resetPassword: async (_, args, { request }) => {
             try {
-                const { email } = args;
+                const { oldPassword, newPassword, newPasswordConfirmation } =
+                    args;
 
-                if (email == "") {
-                    return false;
+                const isAuth = isAuthenticated(request);
+
+                if (isAuth === true) {
+                    if (newPassword !== newPasswordConfirmation) {
+                        return false;
+                    }
+
+                    const userInfo = await prisma.user.findUnique({
+                        where: { id: request.user.id },
+                    });
+
+                    console.log(userInfo);
+
+                    const hashedOldPassword = generateSaltedHash(
+                        generateFrontSaltedHash(oldPassword)
+                    );
+
+                    if (hashedOldPassword !== userInfo.password) {
+                        return false;
+                    }
+
+                    const hashedNewPassword = generateSaltedHash(
+                        generateFrontSaltedHash(newPassword)
+                    );
+
+                    await prisma.user.update({
+                        where: {
+                            id: request.user.id,
+                        },
+                        data: {
+                            password: hashedNewPassword,
+                        },
+                    });
+
+                    return true;
                 }
-
-                const isExist = await prisma.user.findFirst({
-                    where: {
-                        email,
-                    },
-                });
-
-                if (isExist === null) {
-                    return false;
-                }
-
-                const newPassword = generateRandomPassword();
-
-                const hashedNewPassword = generateSaltedHash(
-                    generateFrontSaltedHash(newPassword)
-                );
-
-                console.log("success hashedGenerateRandomPassword");
-
-                //https://myaccount.google.com/lesssecureapps?pli=1&rapt=AEjHL4NIYbrR8zXS17OOmtVWK1wnZ9zyoQd5EAa1VMcuzyOfq1wbDx9F_9v_zRGaEVPNRQXmS34Tm4Xx1dQk4cdNFP6eWL6C3w 보안설정 바꾸기
-                transport.sendMail({
-                    from: `BLOG <openblogyt@gmail.com>`,
-                    to: email,
-                    subject: "[BLOG] 새로운 비밀번호입니다.",
-                    html: `
-                      <div style="text-align: center;">
-                        <h3 style="color: #505050">NEW PASSWORD</h3>
-                        <br />
-                        <p>${newPassword}</p>
-                      </div>
-                    `,
-                });
-
-                await prisma.user.update({
-                    where: {
-                        email,
-                    },
-                    data: {
-                        password: hashedNewPassword,
-                    },
-                });
-
-                return true;
             } catch (err) {
                 console.log(err);
                 return false;
