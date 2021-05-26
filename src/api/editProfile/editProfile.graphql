@@ -1,0 +1,12 @@
+type editProfileResponse {
+    ok: Boolean
+    profileImageId: String
+}
+
+type Mutation {
+    editProfile(profileImage: String): editProfileResponse
+}
+
+type Query {
+    dummy: String
+}

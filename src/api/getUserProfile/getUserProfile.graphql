@@ -1,5 +1,8 @@
 type getUserProfileResponse {
+    email: String
     userId: String
+    profileImageId: String
+    id: String
 }
 
 type Query {

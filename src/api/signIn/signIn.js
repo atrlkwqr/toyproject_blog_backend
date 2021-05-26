@@ -19,6 +19,7 @@ const login = {
                     return {
                         ok: false,
                         token: null,
+                        id: null,
                     };
                 }
 
@@ -31,17 +32,20 @@ const login = {
                     return {
                         ok: false,
                         token: null,
+                        id: null,
                     };
                 }
                 return {
                     ok: true,
                     token: token,
+                    id: userInfo.id,
                 };
             } catch (err) {
                 console.log(err);
                 return {
                     ok: false,
                     token: null,
+                    id: null,
                 };
             }
         },

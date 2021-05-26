@@ -11,6 +11,7 @@ model User {
   id String @default(cuid()) @id
   email String @unique
   userId String @unique
+  profileImageId String?
   password String?
   createdAt DateTime @default(now())
 }

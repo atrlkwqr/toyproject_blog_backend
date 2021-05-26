@@ -19,17 +19,26 @@ const getProfile = {
                     if (userInfo === null) {
                         return {
                             userId: null,
+                            email: null,
+                            profileImageId: null,
+                            id: null,
                         };
                     }
 
                     return {
                         userId: userInfo.userId,
+                        email: userInfo.email,
+                        profileImageId: userInfo.profileImageId,
+                        id: userInfo.id,
                     };
                 }
             } catch (err) {
                 console.log(err);
                 return {
                     userId: null,
+                    email: null,
+                    profileImageId: null,
+                    id: null,
                 };
             }
         },

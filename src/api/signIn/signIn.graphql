@@ -1,6 +1,7 @@
 type SignInResponse {
     ok: Boolean
     token: String
+    id: String
 }
 
 type Mutation {
